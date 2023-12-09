@@ -112,77 +112,82 @@ public class Calculator {
 			}
 
 			private void convertTime() {
-                try {
-                    long inputTime = Long.parseLong(textField1.getText());
-                    String fromUnit = (String) comboBox1.getSelectedItem();
-                    String toUnit = (String) comboBox2.getSelectedItem();
-                    long convertedTime;
-                    long microseconds;
+			    try {
+			        long inputTime = Long.parseLong(textField1.getText());
+			        String fromUnit = (String) comboBox1.getSelectedItem();
+			        String toUnit = (String) comboBox2.getSelectedItem();
+			        double convertedTime;
+			        double microseconds;
+			        switch (fromUnit) {
+			            case "Microseconds":
+			            	microseconds = inputTime;
+			                break;
+			            case "Milliseconds":
+			            	microseconds = inputTime * 1000; // convert milliseconds to microseconds
+			                break;
+			            case "Seconds":
+			            	microseconds = inputTime * 1e+6;
+			                break;
+			            case "Minutes":
+			            	microseconds = inputTime * 6e+7;
+			                break;
+			            case "Hours":
+			            	microseconds = inputTime * 3.6e+9;
+			                break;
+			            case "Days":
+			            	microseconds = inputTime * 8.64e+10;
+			                break;
+			            case "Weeks":
+			            	microseconds = inputTime * 6.048e+11;
+			                break;
+			            case "Years":
+			            	microseconds = inputTime * 3.154e+13;
+			                break;
+			            default:
+			            	microseconds = TimeUnit.valueOf(fromUnit).toMicros(inputTime);
+			                break;
+			        }
 
-                    switch (fromUnit) {
-                        case "Microseconds":
-                        	microseconds = inputTime;
-                            break;
-                        case "Milliseconds":
-                        	microseconds = TimeUnit.MILLISECONDS.toMicros(inputTime);
-                            break;
-                        case "Seconds":
-                        	microseconds = TimeUnit.SECONDS.toMicros(inputTime);
-                            break;
-                        case "Minutes":
-                        	microseconds = TimeUnit.MINUTES.toMicros(inputTime);
-                            break;
-                        case "Hours":
-                        	microseconds = TimeUnit.HOURS.toMicros(inputTime);
-                            break;
-                        case "Days":
-                        	microseconds = TimeUnit.DAYS.toMicros(inputTime);
-                            break;
-                        case "Weeks":
-                        	microseconds = TimeUnit.DAYS.toMicros(inputTime * 7);
-                            break;
-                        case "Years":
-                        	microseconds = TimeUnit.DAYS.toMicros(inputTime * 365);
-                            break;
-                        default:
-                        	microseconds = 0;
-                    }
-                    microseconds = Math.max(Long.MIN_VALUE, Math.min(microseconds, Long.MAX_VALUE));
-                    switch (toUnit) {
-                    case "Microseconds":
-                        convertedTime = microseconds;
-                        break;
-                    case "Milliseconds":
-                        convertedTime = TimeUnit.MICROSECONDS.toMillis(microseconds);
-                        break;
-                    case "Seconds":
-                        convertedTime = TimeUnit.MICROSECONDS.toSeconds(microseconds);
-                        break;
-                    case "Minutes":
-                        convertedTime = TimeUnit.MICROSECONDS.toMinutes(microseconds);
-                        break;
-                    case "Hours":
-                        convertedTime = TimeUnit.MICROSECONDS.toHours(microseconds);
-                        break;
-                    case "Days":
-                        convertedTime = TimeUnit.MICROSECONDS.toDays(microseconds);
-                        break;
-                    case "Weeks":
-                        convertedTime = TimeUnit.MICROSECONDS.toDays(microseconds) / 7;
-                        break;
-                    case "Years":
-                        convertedTime = TimeUnit.MICROSECONDS.toDays(microseconds) / 365;
-                        break;
-                    default:
-                        convertedTime = 0;
-                }
-                    convertedTime = Math.max(Long.MIN_VALUE, Math.min(convertedTime, Long.MAX_VALUE));
-
-                    textField2.setText(String.valueOf(convertedTime));
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frmTimeCalculator, "Please enter a valid number!");
-                }
-            }
+			        switch (toUnit) {
+			            case "Microseconds":
+			            	convertedTime =microseconds;
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            case "Milliseconds":
+			                convertedTime =microseconds* 0.001; // convert microseconds to milliseconds
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            case "Seconds":
+			                convertedTime =microseconds* 1e-6; // convert microseconds to seconds
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            case "Minutes":
+			                convertedTime = microseconds* 1.66667e-8; // convert microseconds to minutes
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            case "Hours":
+			                convertedTime =microseconds* 2.77778e-10; // convert microseconds to hours
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            case "Days":
+			                convertedTime =microseconds*  1.15741e-11; // convert microseconds to days
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            case "Weeks":
+			                convertedTime =microseconds* 1.65344e-12; // convert microseconds to weeks
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            case "Years":
+			                convertedTime =microseconds* 3.171e-14; // convert microseconds to years
+			                textField2.setText(String.valueOf(convertedTime));
+			                break;
+			            default:
+			                textField2.setText("Invalid conversion");
+			        }
+			    } catch (NumberFormatException ex) {
+			        JOptionPane.showMessageDialog(frmTimeCalculator, "Please enter a valid number!");
+			    }
+			}
 
 		});
 		convertButton.setBounds(245, 420, 116, 46);
